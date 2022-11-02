@@ -82,7 +82,7 @@ public class PizzaProducer {
 
     public static void main(String[] args) {
 
-        String topicName = "pizza-topic-static"; // 3개의 파티션을 가지는 토픽
+        String topicName = "pizza-topic-2";
 
         // KafkaProducer Configuration
         // null, "hello world"
@@ -96,7 +96,7 @@ public class PizzaProducer {
         // Kafka producer object creation
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<String, String>(props);
 
-        sendPizzaMessage(kafkaProducer, topicName, -1, 500, 0, 0, true);
+        sendPizzaMessage(kafkaProducer, topicName, -1, 1000, 0, 0, true);
 
         kafkaProducer.close();
     }

@@ -25,6 +25,9 @@ public class SimpleConsumer {
         props.setProperty(KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.setProperty(VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.setProperty(GROUP_ID_CONFIG, "group-01");
+//        props.setProperty(HEARTBEAT_INTERVAL_MS_CONFIG, "5000");
+//        props.setProperty(SESSION_TIMEOUT_MS_CONFIG, "90000");
+//        props.setProperty(MAX_POLL_INTERVAL_MS_CONFIG, "600000");
 
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<String, String>(props);
         kafkaConsumer.subscribe(List.of(topicName));

@@ -20,13 +20,15 @@ public class ConsumerjWakeup {
 
     public static void main(String[] args) {
 
-        String topicName = "simple-topic";
+        String topicName = "pizza-topic-static";
 
         Properties props = new Properties();
         props.setProperty(BOOTSTRAP_SERVERS_CONFIG, "master0:9092");
         props.setProperty(KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.setProperty(VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        props.setProperty(GROUP_ID_CONFIG, "group-01");
+//        props.setProperty(GROUP_ID_CONFIG, "group-01");
+        props.setProperty(GROUP_ID_CONFIG, "group-01-static");
+        props.setProperty(GROUP_INSTANCE_ID_CONFIG, "3");
         // props.setProperty(AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<String, String>(props);
@@ -54,8 +56,8 @@ public class ConsumerjWakeup {
                 ConsumerRecords<String, String> consumerRecords = kafkaConsumer.poll(Duration.ofMillis(1000));
 
                 for (ConsumerRecord<String, String> record : consumerRecords) {
-                    logger.info("record => key: {}, value: {}, partition: {}, offset: {}",
-                            record.key(), record.value(), record.partition(), record.offset());
+                    logger.info("record => key: {}, partition: {}, offset: {}, value: {}",
+                            record.key(), record.partition(), record.offset(), record.value());
                 }
             }
         } catch (WakeupException e) {
@@ -64,9 +66,5 @@ public class ConsumerjWakeup {
             logger.info("finally consumer is closing");
             kafkaConsumer.close();
         }
-
-
-
-
     }
 }

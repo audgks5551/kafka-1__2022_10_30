@@ -1,5 +1,6 @@
 package org.example.kafka;
 
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -26,6 +27,7 @@ public class ConsumerjWakeup {
         props.setProperty(KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.setProperty(VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.setProperty(GROUP_ID_CONFIG, "group-01");
+        // props.setProperty(AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<String, String>(props);
         kafkaConsumer.subscribe(List.of(topicName));
@@ -52,8 +54,8 @@ public class ConsumerjWakeup {
                 ConsumerRecords<String, String> consumerRecords = kafkaConsumer.poll(Duration.ofMillis(1000));
 
                 for (ConsumerRecord<String, String> record : consumerRecords) {
-                    logger.info("record => key: {}, value: {}, partition: {}",
-                            record.key(), record.value(), record.partition());
+                    logger.info("record => key: {}, value: {}, partition: {}, offset: {}",
+                            record.key(), record.value(), record.partition(), record.offset());
                 }
             }
         } catch (WakeupException e) {

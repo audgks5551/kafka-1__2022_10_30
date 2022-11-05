@@ -1,8 +1,6 @@
 package org.example.kafka;
 
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.errors.WakeupException;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
@@ -20,10 +18,13 @@ public class ConsumerMTopicRebalance {
     public static void main(String[] args) {
 
         Properties props = new Properties();
-        props.setProperty(BOOTSTRAP_SERVERS_CONFIG, "master0:9092");
+        props.setProperty(BOOTSTRAP_SERVERS_CONFIG, "worker0:30000");
         props.setProperty(KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.setProperty(VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        props.setProperty(GROUP_ID_CONFIG, "group-mtopic");
+        props.setProperty(GROUP_ID_CONFIG, "group-cooper");
+//        props.setProperty(PARTITION_ASSIGNMENT_STRATEGY_CONFIG, RoundRobinAssignor.class.getName());
+        props.setProperty(PARTITION_ASSIGNMENT_STRATEGY_CONFIG, CooperativeStickyAssignor.class.getName());
+
 
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<String, String>(props);
         kafkaConsumer.subscribe(List.of("topic-p3-t1", "topic-p3-t2"));

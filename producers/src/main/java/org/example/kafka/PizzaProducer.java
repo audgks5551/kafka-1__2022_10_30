@@ -89,7 +89,7 @@ public class PizzaProducer {
 
         Properties props = new Properties();
         // bootstrap.servers, key.serializer.class, value.serializer.class
-        props.setProperty(BOOTSTRAP_SERVERS_CONFIG, "master0:9092");
+        props.setProperty(BOOTSTRAP_SERVERS_CONFIG, "worker0:30000");
         props.setProperty(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.setProperty(VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
